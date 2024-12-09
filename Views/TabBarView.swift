@@ -9,7 +9,18 @@ import SwiftUI
 
 struct TabBarView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        TabView {
+            MenuView()
+                .tabItem {
+                    Label("Menu", systemImage: "contextualmenu.and.cursorarrow")
+                }
+            
+            CalendarView()
+                .tabItem {
+                    Label("Calender", systemImage: "calendar")
+                }
+            
+        }
     }
 }
 
