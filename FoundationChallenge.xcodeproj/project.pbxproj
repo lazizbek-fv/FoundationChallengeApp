@@ -11,6 +11,16 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		1906741B2D07344700EA8A7D /* Views */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Views;
+			sourceTree = "<group>";
+		};
+		1906741E2D0734B500EA8A7D /* Models */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Models;
+			sourceTree = "<group>";
+		};
 		193E71E62D020019006A08D9 /* FoundationChallenge */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = FoundationChallenge;
@@ -34,6 +44,8 @@
 			children = (
 				193E71E62D020019006A08D9 /* FoundationChallenge */,
 				193E71E52D020019006A08D9 /* Products */,
+				1906741B2D07344700EA8A7D /* Views */,
+				1906741E2D0734B500EA8A7D /* Models */,
 			);
 			sourceTree = "<group>";
 		};
@@ -61,6 +73,8 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
+				1906741B2D07344700EA8A7D /* Views */,
+				1906741E2D0734B500EA8A7D /* Models */,
 				193E71E62D020019006A08D9 /* FoundationChallenge */,
 			);
 			name = FoundationChallenge;
