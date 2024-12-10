@@ -18,31 +18,38 @@ struct AddReminderView: View {
     @State private var selectedPriority: Priority = .medium
 
     var body: some View {
-        Form {
-            TextField("Title", text: $title)
-            TextField("Description", text: $notes)
-            DatePicker("Date", selection: $date, displayedComponents: [.date, .hourAndMinute])
-
-            Picker("Priority", selection: $selectedPriority) {
-                ForEach(Priority.allCases, id: \.self) { priority in
-                    Text(priority.rawValue.capitalized)
+        NavigationStack {
+            Form {
+                TextField("Title", text: $title)
+                TextField("Description", text: $notes)
+                DatePicker("Date", selection: $date, displayedComponents: [.date, .hourAndMinute])
+                
+                Picker("Priority", selection: $selectedPriority) {
+                    ForEach(Priority.allCases, id: \.self) { priority in
+                        Text(priority.rawValue.capitalized)
+                    }
+                }
+                .pickerStyle(SegmentedPickerStyle())
+                
+                Button("Save") {
+                    let newReminder = Reminder(
+                        title: title,
+                        date: date,
+                        notes: notes,
+                        priority: selectedPriority
+                    )
+                    modelContext.insert(newReminder)
+                    dismiss()
+                }
+                .disabled(title.isEmpty)
+            }
+            .navigationTitle("Add Reminder")
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button("Cancel") { dismiss() }
                 }
             }
-            .pickerStyle(SegmentedPickerStyle())
-
-            Button("Save") {
-                let newReminder = Reminder(
-                    title: title,
-                    date: date,
-                    notes: notes,
-                    priority: selectedPriority
-                )
-                modelContext.insert(newReminder) // Save to SwiftData
-                dismiss() // Close the view
-            }
-            .disabled(title.isEmpty)
         }
-        .navigationTitle("Add Reminder")
     }
 }
 

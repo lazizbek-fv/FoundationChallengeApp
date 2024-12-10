@@ -10,16 +10,15 @@ import SwiftUI
 struct ContainerView: View {
     var body: some View {
         TabView {
-            MenuView()
+            DashboardView()
                 .tabItem {
                     Label("Menu", systemImage: "contextualmenu.and.cursorarrow")
                 }
-            
-            CalendarMainView()
+
+            CalendarView()
                 .tabItem {
                     Label("Calender", systemImage: "calendar")
-                }
-            
+            }
         }
     }
 }

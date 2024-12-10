@@ -14,8 +14,10 @@ enum Priority: String, Codable, CaseIterable {
     case high
 }
 
+import SwiftData
+
 @Model
-class Reminder {
+final class Reminder {
     @Attribute(.unique) var id: UUID
     var title: String
     var date: Date
@@ -23,13 +25,7 @@ class Reminder {
     var isCompleted: Bool
     var priority: Priority
 
-    init(
-        title: String,
-        date: Date,
-        notes: String = "",
-        isCompleted: Bool = false,
-        priority: Priority = .medium
-    ) {
+    init(title: String, date: Date, notes: String = "", isCompleted: Bool = false, priority: Priority = .medium) {
         self.id = UUID()
         self.title = title
         self.date = date
