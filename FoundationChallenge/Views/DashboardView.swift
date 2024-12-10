@@ -6,9 +6,11 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct DashboardView: View {
     @State var showAddReminderView: Bool = false
+    @Query(sort: \Reminder.date, order: .forward) private var reminders: [Reminder]
     
     var body: some View {
         NavigationStack {
@@ -50,7 +52,7 @@ struct DashboardView: View {
                                     .foregroundColor(.orange)
                                 Text("Reminders")
                                 Spacer()
-                                Text("0")
+                                Text("\(reminders.count)")
                                     .foregroundColor(.gray)
                             }
                         }
@@ -66,7 +68,6 @@ struct DashboardView: View {
                         }
                     }
                     .listStyle(.plain)
-                    .frame(height: 150)
                 }
                 
                 Spacer()
