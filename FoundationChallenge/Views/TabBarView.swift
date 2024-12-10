@@ -10,16 +10,15 @@ import SwiftUI
 struct TabBarView: View {
     var body: some View {
         TabView {
-            MenuView()
+            DashboardView()
                 .tabItem {
                     Label("Menu", systemImage: "contextualmenu.and.cursorarrow")
                 }
-            
+
             CalendarView()
                 .tabItem {
                     Label("Calender", systemImage: "calendar")
-                }
-            
+            }
         }
     }
 }
