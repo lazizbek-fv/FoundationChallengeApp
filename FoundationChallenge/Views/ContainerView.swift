@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct TabBarView: View {
+struct ContainerView: View {
     var body: some View {
         TabView {
             MenuView()
@@ -15,7 +15,7 @@ struct TabBarView: View {
                     Label("Menu", systemImage: "contextualmenu.and.cursorarrow")
                 }
             
-            CalendarView()
+            CalendarMainView()
                 .tabItem {
                     Label("Calender", systemImage: "calendar")
                 }
@@ -25,5 +25,5 @@ struct TabBarView: View {
 }
 
 #Preview {
-    TabBarView()
+    ContainerView()
 }

@@ -12,17 +12,20 @@ struct CalendarView: View {
     
     var body: some View {
         NavigationStack {
-            VStack {
-                DatePicker(
-                    "Choose a date",
-                    selection: $selectedDate,
-                    displayedComponents: [.date]
-                )
-                .datePickerStyle(GraphicalDatePickerStyle())
-                .padding()
-                
-                Spacer()
+            ScrollView {
+                VStack {
+                    DatePicker(
+                        "Choose a date",
+                        selection: $selectedDate,
+                        displayedComponents: [.date]
+                    )
+                    .datePickerStyle(GraphicalDatePickerStyle())
+                    .padding()
+                    
+                    Spacer()
+                }
             }
+            .background(Color(.systemGroupedBackground))
             
             .navigationTitle("Calendar")
         }
@@ -32,3 +35,4 @@ struct CalendarView: View {
 #Preview {
     CalendarView()
 }
+
