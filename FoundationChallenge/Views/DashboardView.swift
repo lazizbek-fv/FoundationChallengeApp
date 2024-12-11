@@ -11,41 +11,26 @@ import SwiftData
 struct DashboardView: View {
     @State var showAddReminderView: Bool = false
     @Query(sort: \Reminder.date, order: .forward) private var reminders: [Reminder]
+    @State var searchText: String = ""
     
     var body: some View {
         NavigationStack {
-            VStack(spacing: 20) {
-                
-                HStack {
-                    TextField("Search", text: .constant(""))
-                        .padding(10)
-                        .background(Color(.systemGray6))
-                        .cornerRadius(10)
-                        .overlay(
-                            HStack {
-                                Spacer()
-                                Image(systemName: "magnifyingglass")
-                                    .padding(.trailing, 10)
-                                    .foregroundColor(.gray)
-                            }
-                        )
-                }
-                .padding(.horizontal)
-               
-                LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 15) {
-                    DashboardItem(title: "Today", icon: "calendar.badge.exclamationmark", color: .blue, count: 0)
-                    DashboardItem(title: "Scheduled", icon: "calendar.badge.clock", color: .red, count: 0)
-                    DashboardItem(title: "Flagged", icon: "flag.fill", color: .orange, count: 0)
-                    DashboardItem(title: "Completed", icon: "checkmark.circle.fill", color: .gray, count: 0)
-                }
-                .padding(.horizontal)
-                
-                VStack(alignment: .leading, spacing: 10) {
-                    Text("My Lists")
-                        .font(.headline)
-                        .padding(.leading)
+            ScrollView {
+                VStack(spacing: 20) {
                     
-                    List {
+                    LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 15) {
+                        DashboardItem(title: "Today", icon: "calendar.badge.exclamationmark", color: .blue, count: 0)
+                        DashboardItem(title: "Scheduled", icon: "calendar.badge.clock", color: .red, count: 0)
+                        DashboardItem(title: "Flagged", icon: "flag.fill", color: .orange, count: 0)
+                        DashboardItem(title: "Completed", icon: "checkmark.circle.fill", color: .gray, count: 0)
+                    }
+                    .padding(.horizontal)
+                    
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text("My Lists")
+                            .font(.headline)
+                            .padding(.leading)
+                        
                         NavigationLink(destination: RemainderView()) {
                             HStack {
                                 Image(systemName: "list.bullet")
@@ -54,7 +39,10 @@ struct DashboardView: View {
                                 Spacer()
                                 Text("\(reminders.count)")
                                     .foregroundColor(.gray)
+                                Image(systemName: "chevron.right")
                             }
+                            .padding(10)
+                            .overlay(RoundedRectangle(cornerRadius: 15).stroke(.gray.opacity(0.6), lineWidth: 1))
                         }
                         NavigationLink(destination: Text("Voice Reminders")) {
                             HStack {
@@ -64,44 +52,45 @@ struct DashboardView: View {
                                 Spacer()
                                 Text("0")
                                     .foregroundColor(.gray)
+                                Image(systemName: "chevron.right")
                             }
                         }
-                    }
-                    .listStyle(.plain)
+                        .padding(10)
+                        .overlay(RoundedRectangle(cornerRadius: 15).stroke(.gray.opacity(0.6), lineWidth: 1))
+                    }.padding(.horizontal)
                 }
-                
-                Spacer()
-                
-                HStack {
-                    Button(action: {
-                        self.showAddReminderView.toggle()
-                    }) {
-                        HStack {
-                            Image(systemName: "plus.circle.fill")
-                            Text("New Reminder")
-                        }
-                        .font(.system(size: 16, weight: .medium))
-                        .foregroundColor(.blue)
-                    }.sheet(isPresented: $showAddReminderView, content: {
-                        AddReminderView()
-                    })
-                    
-                    Spacer()
-                    
-                    Button(action: {}) {
-                        HStack {
-                            Image(systemName: "mic.fill")
-                            Text("Add Voice Reminder")
-                        }
-                        .font(.system(size: 16, weight: .medium))
-                        .foregroundColor(.blue)
-                    }
-                }
-                .padding(.horizontal)
-                .padding(.bottom)
             }
-            .navigationTitle("")
-            .navigationBarTitleDisplayMode(.inline)
+            .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
+            
+            .toolbar {
+                ToolbarItem(placement: .bottomBar, content: {
+                    HStack {
+                        Button(action: {
+                            self.showAddReminderView.toggle()
+                        }) {
+                            HStack {
+                                Image(systemName: "plus.circle.fill")
+                                Text("New Reminder")
+                            }
+                            .font(.system(size: 16, weight: .medium))
+                            .foregroundColor(.blue)
+                        }.sheet(isPresented: $showAddReminderView, content: {
+                            AddReminderView()
+                        })
+                        
+                        Spacer()
+                        
+                        Button(action: {}) {
+                            HStack {
+                                Image(systemName: "mic.fill")
+                                Text("Add Voice Reminder")
+                            }
+                            .font(.system(size: 16, weight: .medium))
+                            .foregroundColor(.blue)
+                        }
+                    }
+                })
+            }
         }
     }
 }
@@ -125,9 +114,14 @@ struct DashboardItem: View {
                     .foregroundColor(.black)
             }
             Spacer()
-            Text(title)
-                .font(.callout)
-                .foregroundColor(.black)
+            
+            HStack {
+                Text(title)
+                    .font(.callout)
+                    .foregroundColor(.black)
+                
+                Spacer()
+            }
         }
         .padding()
         .frame(height: 100)
